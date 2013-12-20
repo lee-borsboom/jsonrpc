@@ -48,7 +48,7 @@ Note how the {class} is replaced with the class from the method in the JSON-RPC 
 Usage
 -----
 
-After installing and configuring this package you're ready to rock 'n' roll. Simply create a controller (or whatever you'd prefer to call it) with the desired methods. The params from the request will be passed in to your controller method and the result returned from your controller method will form the result property of the response.
+After installing and configuring this package you're ready to rock 'n' roll. Simply create a controller (or whatever you'd prefer to call it) with the desired methods. The params from the request will be passed in to your controller method and the value returned from your controller method will form the result property of the response.
 
 Note that to omit a response for a request, your controller method should return _null_
 
