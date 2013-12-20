@@ -19,7 +19,7 @@ Installation
 Configuration
 -------------
 
-After publishing the configuration file (see step 3 in the installation process), the JSON-RPC configuration file will be located in <project root>/app/config/packages/leeb/jsonrpc/config.php
+After publishing the configuration file (see step 3 in the installation process), the JSON-RPC configuration file will be located in &lt;app path&gt;/config/packages/leeb/jsonrpc/config.php
 
 #### Routing
 
