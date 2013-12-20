@@ -1,7 +1,7 @@
 JSON-RPC
 =======
 
-JSON-RPC 2.0 package for Laravel 4
+JSON-RPC 2.0 package for Laravel 4, including full support for notifications and batches.
 
 
 Installation
@@ -44,3 +44,46 @@ The initial configuration setting is:
 	\{class}\{class}Controller
 
 Note how the {class} is replaced with the class from the method in the JSON-RPC call.
+
+Usage
+-----
+
+After installing and configuring this package you're ready to rock 'n' roll. Simply create a controller (or whatever you'd prefer to call it) with the desired methods. The params from the request will be passed in to your controller method and the result returned from your controller method will form the result property of the response.
+
+Note that to omit a response for a request, your controller method should return _null_
+
+###### Sample request
+
+	{
+		"id" : 123,
+		"jsonrpc" : "2.0",
+		"method" : "Records.list",
+		"params" : {
+			"artist" : "Queens of the Stone Age"
+		}
+	}
+
+###### Sample controller
+
+
+	namespace Records;
+	
+	class RecordsController
+	{
+		public function list($params)
+		{
+			return array('...Like Clockwork', 'Era Vulgaris', 'Lullabies to Paralyze',
+				'Songs for the Deaf', 'Rated R', 'Queens of the Stone Age');
+		}
+	}
+
+###### Sample response
+
+	{
+		"id": 123,
+		"jsonrpc": "2.0",
+		"result": [
+			"...Like Clockwork","Era Vulgaris","Lullabies to Paralyze",
+			"Songs for the Deaf","Rated R","Queens of the Stone Age"
+		]
+	}
