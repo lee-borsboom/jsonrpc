@@ -48,7 +48,11 @@ Note how the {class} is replaced with the class from the method in the JSON-RPC 
 Usage
 -----
 
-After installing and configuring this package you're ready to rock 'n' roll. Simply create a controller (or whatever you'd prefer to call it) with the desired methods. The params from the request will be passed in to your controller method and the value returned from your controller method will form the result property of the response.
+After installing and configuring this package you're ready to rock 'n' roll. Simply create a controller (or whatever you'd prefer to call it) with the desired methods.
+
+Your controller method will be passed a _Request_ object, which has two method of particular significance. The _data_ method accepts a property name and returns the corresponding value from the _params_ object, or _null_ if no matching property exists.
+
+The _rawData_ provides direct access to the raw params object.
 
 Note that to omit a response for a request, your controller method should return _null_
 
@@ -70,20 +74,36 @@ Note that to omit a response for a request, your controller method should return
 	
 	class RecordsController
 	{
-		public function list($params)
+		public function list($request)
 		{
-			return array('...Like Clockwork', 'Era Vulgaris', 'Lullabies to Paralyze',
-				'Songs for the Deaf', 'Rated R', 'Queens of the Stone Age');
+			return array(
+				"artist" => $request->data('artist'),
+				"albums" => array(
+					'...Like Clockwork',
+					'Era Vulgaris',
+					'Lullabies to Paralyze',
+					'Songs for the Deaf',
+					'Rated R',
+					'Queens of the Stone Age'
+				)
+			);
 		}
 	}
 
 ###### Sample response
 
 	{
-		"id": 123,
+		"id": "234",
 		"jsonrpc": "2.0",
-		"result": [
-			"...Like Clockwork","Era Vulgaris","Lullabies to Paralyze",
-			"Songs for the Deaf","Rated R","Queens of the Stone Age"
-		]
+		"result": {
+			"artist": "qotsa",
+			"albums": [
+				"...Like Clockwork",
+				"Era Vulgaris",
+				"Lullabies to Paralyze",
+				"Songs for the Deaf",
+				"Rated R",
+				"Queens of the Stone Age"
+			]
+		}
 	}
