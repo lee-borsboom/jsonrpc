@@ -93,7 +93,7 @@ Note that to omit a response for a request, your controller method should return
 ###### Sample response
 
 	{
-		"id": "234",
+		"id": 123,
 		"jsonrpc": "2.0",
 		"result": {
 			"artist": "Queens of the Stone Age",
