@@ -33,6 +33,11 @@ class Request implements RequestInterface
 		return $this->params[$property_name];
 	}
 
+	public function rawData()
+	{
+		return $this->params;
+	}
+
 	public function getId()
 	{
 		return $this->id;
