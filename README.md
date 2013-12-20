@@ -96,7 +96,7 @@ Note that to omit a response for a request, your controller method should return
 		"id": "234",
 		"jsonrpc": "2.0",
 		"result": {
-			"artist": "qotsa",
+			"artist": "Queens of the Stone Age",
 			"albums": [
 				"...Like Clockwork",
 				"Era Vulgaris",
