@@ -27,10 +27,20 @@ By default, this package will only route requests that match http://www.yourhost
 
 #### Resolution
 
-This package expects that requests will be made that have a method property in the format of _Class.method_. The **resolution_pattern** configuration option defines how that will be resolved to a class. The package is configured initially to look for the class _\Class\ClassController_. For example, the package will look for _\Records\RecordsController_ and call the _list_ method, given the following request:
+This package expects that requests will be made that have a method property in the format of _Class.method_. It is expected that any such class should be accessible via autoloading.
+
+The **resolution_pattern** configuration option defines how the method from the request will be resolved to a concrete class.
+
+The package is configured initially to look for the class _\Class\ClassController_. For example, the package will look for _\Records\RecordsController_ and call the _list_ method, given the following request:
 
 	{
 		"id" : 123,
 		"jsonrpc" : "2.0",
 		"method" : "Records.list"
 	}
+
+The initial configuration setting is:
+
+	\{class}\{class}Controller
+
+Note how the {class} is replaced with the class from the method in the JSON-RPC call.
