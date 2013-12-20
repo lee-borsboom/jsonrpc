@@ -1,0 +1,21 @@
+{
+    "name": "leeb/jsonrpc",
+    "description": "JSONRPC 2.0 package for Laravel 4",
+    "version" : "0.0.1-alpha",
+    "authors": [
+        {
+            "name": "Lee Borsboom",
+            "email": "lee.borsboom@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "illuminate/support": "4.0.x"
+    },
+    "autoload": {
+        "psr-0": {
+            "Leeb\\Jsonrpc": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}
