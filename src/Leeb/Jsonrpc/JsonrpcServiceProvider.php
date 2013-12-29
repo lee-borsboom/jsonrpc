@@ -55,6 +55,9 @@ class JsonrpcServiceProvider extends ServiceProvider
 		\App::singleton('Leeb\Jsonrpc\Interfaces\MethodResolverInterface',
 			'Leeb\Jsonrpc\MethodResolver');
 
+		\App::singleton('Leeb\Jsonrpc\Interfaces\JsonrpcConfigurationInterface',
+			'Leeb\Jsonrpc\JsonrpcConfiguration');
+
 		\App::singleton('Leeb\Jsonrpc\Interfaces\RequestValidatorInterface',
 			'Leeb\Jsonrpc\RequestValidator');
 
@@ -64,7 +67,8 @@ class JsonrpcServiceProvider extends ServiceProvider
 
 	public function boot()
 	{
-		$route_prefix = \Config::get('jsonrpc::route_prefix');
+		$configuration = \App::make('Leeb\Jsonrpc\Interfaces\JsonrpcConfigurationInterface');
+		$route_prefix = $configuration->getRoutePrefix();
 
 		if (empty($route_prefix)) {
 			$this->routeAllToJsonrpc();
