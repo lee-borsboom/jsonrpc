@@ -27,7 +27,7 @@ By default, this package will only route requests that match http://www.yourhost
 
 #### Resolution
 
-This package expects that requests will be made that have a method property in the format of _Class.method_. It is expected that any such class should be accessible via autoloading.
+This package expects that requests will be made that have a method property in the format of _Class.method_. It is expected that any such class should be accessible via IoC.
 
 The **resolution_pattern** configuration option defines how the method from the request will be resolved to a concrete class.
 
