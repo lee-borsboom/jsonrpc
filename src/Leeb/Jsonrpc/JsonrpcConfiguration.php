@@ -13,6 +13,6 @@ class JsonrpcConfiguration implements JsonrpcConfigurationInterface
 
 	public function getRoutePrefix()
 	{
-		return \Config::get('jsonrpc::route_prefix', '');
+		return \Config::get('jsonrpc::route_prefix');
 	}
 }
