@@ -23,7 +23,7 @@ After publishing the configuration file (see step 3 in the installation process)
 
 #### Routing
 
-By default, this package will only route requests that match http://www.yourhost.com/jsonrpc. This can be configured by setting the **route_prefix** configuration option. Note that to match all routes, you should remove this configuration option completely.
+By default, this package will only route requests that match http://www.yourhost.com/jsonrpc. This can be configured by setting the **route_prefix** configuration option. Note that to match all routes, set this to null or remove the **route_prefix** configuration setting from the configuration file entirely.
 
 #### Resolution
 
@@ -53,8 +53,6 @@ After installing and configuring this package you're ready to rock 'n' roll. Sim
 Your controller method will be passed a _Request_ object, which has two method of particular significance. The _data_ method accepts a property name and returns the corresponding value from the _params_ object, or _null_ if no matching property exists.
 
 The _rawData_ provides direct access to the raw params object.
-
-Note that to omit a response for a request, your controller method should return _null_
 
 ###### Sample request
 
