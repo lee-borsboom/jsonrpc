@@ -54,8 +54,6 @@ Your controller method will be passed a _Request_ object, which has two method o
 
 The _rawData_ provides direct access to the raw params object.
 
-Note that to omit a response for a request, your controller method should return _null_
-
 ###### Sample request
 
 	{
