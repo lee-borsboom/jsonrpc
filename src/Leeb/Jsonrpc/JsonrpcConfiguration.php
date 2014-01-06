@@ -15,4 +15,9 @@ class JsonrpcConfiguration implements JsonrpcConfigurationInterface
 	{
 		return \Config::get('jsonrpc::route_prefix');
 	}
+
+	public function getResolver()
+	{
+		return \Config::get('jsonrpc::resolver');
+	}
 }

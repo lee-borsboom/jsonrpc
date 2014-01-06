@@ -13,9 +13,9 @@ class MethodResolver implements MethodResolverInterface
 
 	public function resolve($client_method_string)
 	{
-		$client_method_pieces = $this->splitClientMethodString($client_method_string);
-		$resolution_pattern = $this->configuration->getResolutionPattern();
-		$controller_name = $this->extractControllerName($client_method_pieces, $resolution_pattern);
+		$controller_name = $this->getControllerName($client_method_string);
+
+		dd($controller_name);
 
 		try {
 			$controller = $this->loadController($controller_name);
@@ -23,6 +23,7 @@ class MethodResolver implements MethodResolverInterface
 			throw new MethodNotFoundException($client_method_string);
 		}
 
+		$client_method_pieces = $this->splitClientMethodString($client_method_string);
 		$method_name = $this->extractMethodName($client_method_pieces);
 
 		if ( ! \method_exists($controller, $method_name)) {
@@ -30,6 +31,25 @@ class MethodResolver implements MethodResolverInterface
 		}
 
 		return array($controller, $method_name);
+	}
+
+	protected function getControllerName($client_method_string)
+	{
+		$custom_resolver = $this->configuration->getResolver();
+
+		if (is_callable($custom_resolver)) {
+			return call_user_func($custom_resolver, $client_method_string);
+		}
+
+		return $this->resolveUsingDefaultMethod($client_method_string);
+	}
+
+	protected function resolveUsingDefaultMethod($client_method_string)
+	{
+		$client_method_pieces = $this->splitClientMethodString($client_method_string);
+
+		$resolution_pattern = $this->configuration->getResolutionPattern();
+		return $this->extractControllerName($client_method_pieces, $resolution_pattern);
 	}
 	
 	protected function loadController($controller_name)

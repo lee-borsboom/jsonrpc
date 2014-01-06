@@ -45,6 +45,10 @@ The initial configuration setting is:
 
 Note how the {class} is replaced with the class from the method in the JSON-RPC call.
 
+#### Custom resolver
+
+Another, more flexible method of resolution is to provide a **callable** in the **resolver** configurable option. If provided, this should be a **callable** that accepts one parameter (the method string direct from the client request) and return a string representing the class to use in action the request (including the full namespace).
+
 Usage
 -----
 

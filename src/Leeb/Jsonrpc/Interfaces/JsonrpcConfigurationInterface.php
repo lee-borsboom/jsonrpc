@@ -4,4 +4,5 @@ interface JsonrpcConfigurationInterface
 {
 	public function getRoutePrefix();
 	public function getResolutionPattern();
+	public function getResolver();
 }
