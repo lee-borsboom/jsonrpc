@@ -15,8 +15,6 @@ class MethodResolver implements MethodResolverInterface
 	{
 		$controller_name = $this->getControllerName($client_method_string);
 
-		dd($controller_name);
-
 		try {
 			$controller = $this->loadController($controller_name);
 		} catch (\Exception $e) {
