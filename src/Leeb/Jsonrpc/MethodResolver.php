@@ -17,7 +17,7 @@ class MethodResolver implements MethodResolverInterface
 
 		try {
 			$controller = $this->loadController($controller_name);
-		} catch (\Exception $e) {
+		} catch (\ReflectionException $e) {
 			throw new MethodNotFoundException($client_method_string);
 		}
 
