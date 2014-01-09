@@ -109,3 +109,26 @@ The _rawData_ provides direct access to the raw params object.
 			]
 		}
 	}
+
+Events
+------
+This package adds the following events:
+	
+#### jsonrpc.beforeExecution
+
+	Events::listen('jsonrpc.beforeExecution', function ($request, $handler_object, $handler_method_name) {
+		$params = $request->rawData();
+		$params['automatically_injected_value'] = 5;
+		$request->setParams($params);
+	});
+
+
+#### jsonrpc.beforeOutput
+
+	Events::listen('jsonrpc.beforeOutput', function ($response, $handler_object, $handler_method_name) {
+		if ($response->error) {
+			// Do something in the event of an error
+		} else {
+			$response->result['automatically_injected_value'] = 5;
+		}
+	});
