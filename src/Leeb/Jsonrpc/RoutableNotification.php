@@ -41,6 +41,7 @@ class RoutableNotification implements RoutableInterface
 
 	protected function executeRequest(array $callable, RequestInterface $request)
 	{
+		\Event::fire('jsonrpc.beforeExecution', array($request, $callable[0], $callable[1]));
 		return call_user_func($callable, $request);
 	}
 }

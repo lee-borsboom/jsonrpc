@@ -23,7 +23,9 @@ class RoutableRequest implements RoutableInterface
 		try {
 			$callable = $this->resolver->resolve($this->request->getMethod());
 			$result = $this->executeRequest($callable, $this->request);
-			return $this->response_builder->buildFromResult($this->request, $result);
+			$response = $this->response_builder->buildFromResult($this->request, $result);
+			\Event::fire('jsonrpc.beforeOutput', array($response, $callable[0], $callable[1]));
+			return $response;
 		} catch (\Exception $e) {
 			return $this->response_builder->buildFromException($this->request, $e);
 		}
@@ -51,6 +53,7 @@ class RoutableRequest implements RoutableInterface
 
 	protected function executeRequest(array $callable, RequestInterface $request)
 	{
+		\Event::fire('jsonrpc.beforeExecution', array($request, $callable[0], $callable[1]));
 		return call_user_func($callable, $request);
 	}
 }
