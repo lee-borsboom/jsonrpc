@@ -4,6 +4,7 @@ interface RequestInterface
 {
 	public function __construct($raw_data);
 	public function data($property_name);
+	public function rawData();
 	public function isNotification();
 	public function getId();
 	public function getVersion();
