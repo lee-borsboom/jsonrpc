@@ -3,6 +3,7 @@
 use Leeb\Jsonrpc\Interfaces\MethodResolverInterface;
 use Leeb\Jsonrpc\Interfaces\JsonrpcConfigurationInterface;
 use Leeb\Jsonrpc\Exceptions\MethodNotFoundException;
+use Leeb\Jsonrpc\Exceptions\InternalErrorException;
 
 class MethodResolver implements MethodResolverInterface
 {
@@ -18,7 +19,7 @@ class MethodResolver implements MethodResolverInterface
 		try {
 			$controller = $this->loadController($controller_name);
 		} catch (\ReflectionException $e) {
-			throw new MethodNotFoundException($client_method_string);
+			$this->handleReflectionException($e, $controller_name, $client_method_string);
 		}
 
 		$client_method_pieces = $this->splitClientMethodString($client_method_string);
@@ -29,6 +30,16 @@ class MethodResolver implements MethodResolverInterface
 		}
 
 		return array($controller, $method_name);
+	}
+
+	protected function handleReflectionException(\ReflectionException $e, $controller_name,
+		$client_method_string
+	) {
+		if (strstr($e->getMessage(), 'Class '.$controller_name.' does not exist')) {
+			throw new MethodNotFoundException($client_method_string);
+		} else {
+			throw new InternalErrorException('Unknown error occurred');
+		}
 	}
 
 	protected function getControllerName($client_method_string)
