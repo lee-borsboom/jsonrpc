@@ -22,9 +22,10 @@ class RoutableRequest implements RoutableInterface
 	{
 		try {
 			$callable = $this->resolver->resolve($this->request->getMethod());
-			$result = $this->executeRequest($callable, $this->request);
+			\Request::replace($this->request->rawData());
+			$result = $this->executeRequest($callable);
 			$response = $this->response_builder->buildFromResult($this->request, $result);
-			\Event::fire('jsonrpc.beforeOutput', array($response, $callable[0], $callable[1]));
+			$this->fireBeforeOutputEvent($response, $callable);
 			return $response;
 		} catch (\Exception $e) {
 			return $this->response_builder->buildFromException($this->request, $e);
@@ -51,9 +52,19 @@ class RoutableRequest implements RoutableInterface
 		return false;
 	}
 
-	protected function executeRequest(array $callable, RequestInterface $request)
+	protected function executeRequest(array $callable)
 	{
-		\Event::fire('jsonrpc.beforeExecution', array($request, $callable[0], $callable[1]));
-		return call_user_func($callable, $request);
+		$this->fireBeforeExecutionEvent($callable);
+		return call_user_func($callable);
+	}
+
+	protected function fireBeforeExecutionEvent($callable)
+	{
+		\Event::fire('jsonrpc.beforeExecution', array($callable[0], $callable[1]));
+	}
+
+	protected function fireBeforeOutputEvent($response, $callable)
+	{
+		\Event::fire('jsonrpc.beforeOutput', array($response, $callable[0], $callable[1]));
 	}
 }

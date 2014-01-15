@@ -19,7 +19,8 @@ class RoutableNotification implements RoutableInterface
 	{
 		try {
 			$callable = $this->resolver->resolve($this->request->getMethod());
-			$this->executeRequest($callable, $this->request);
+			\Request::replace($this->request->rawData());
+			$this->executeRequest($callable);
 		} catch (\Exception $e) { }
 
 		return null;
@@ -39,9 +40,9 @@ class RoutableNotification implements RoutableInterface
 		return true;
 	}
 
-	protected function executeRequest(array $callable, RequestInterface $request)
+	protected function executeRequest(array $callable)
 	{
-		\Event::fire('jsonrpc.beforeExecution', array($request, $callable[0], $callable[1]));
-		return call_user_func($callable, $request);
+		\Event::fire('jsonrpc.beforeExecution', array($callable[0], $callable[1]));
+		return call_user_func($callable);
 	}
 }
