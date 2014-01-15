@@ -54,9 +54,7 @@ Usage
 
 After installing and configuring this package you're ready to rock 'n' roll. Simply create a controller (or whatever you'd prefer to call it) with the desired methods.
 
-Your controller method will be passed a _Request_ object, which has two method of particular significance. The _data_ method accepts a property name and returns the corresponding value from the _params_ object, or _null_ if no matching property exists.
-
-The _rawData_ provides direct access to the raw params object.
+The body of the JSON-RPC params structure is accessible using Laravel's _Input::all()_, _Input::get_ and _Request::input_ methods.
 
 ###### Sample request
 
@@ -76,10 +74,10 @@ The _rawData_ provides direct access to the raw params object.
 	
 	class RecordsController
 	{
-		public function list($request)
+		public function list()
 		{
-			return array(
-				"artist" => $request->data('artist'),
+			return \Response::make(array(
+				"artist" => \Input::get('artist'),
 				"albums" => array(
 					'...Like Clockwork',
 					'Era Vulgaris',
@@ -88,7 +86,7 @@ The _rawData_ provides direct access to the raw params object.
 					'Rated R',
 					'Queens of the Stone Age'
 				)
-			);
+			));
 		}
 	}
 
@@ -116,17 +114,17 @@ This package adds the following events:
 	
 #### jsonrpc.beforeExecution
 
-	Events::listen('jsonrpc.beforeExecution', function ($request, $handler_object, $handler_method_name) {
-		$params = $request->rawData();
+	Event::listen('jsonrpc.beforeExecution', function ($handler_object, $handler_method_name) {
+		$params = \Input::all();
 		$params['automatically_injected_value'] = 5;
-		$request->setParams($params);
+		\Input::replace($params);
 	});
 
 
 #### jsonrpc.beforeOutput
 
-	Events::listen('jsonrpc.beforeOutput', function ($response, $handler_object, $handler_method_name) {
-		if ($response->error) {
+	\Event::listen('jsonrpc.beforeOutput', function ($response, $handler_object, $handler_method_name) {
+		if (isset($response->error)) {
 			// Do something in the event of an error
 		} else {
 			$response->result['automatically_injected_value'] = 5;
