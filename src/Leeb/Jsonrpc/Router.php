@@ -40,8 +40,10 @@ class Router implements RouterInterface
 
 	protected function outputResult($result)
 	{
-		if ( ! empty($result)) {
+		if (is_array($result) || is_object($result)) {
 			echo json_encode($result);
+		} else {
+			echo $result;
 		}
 	}
 }
