@@ -2,6 +2,8 @@
 
 use Leeb\Jsonrpc\Interfaces\JsonrpcResponseBuilderInterface;
 use Leeb\Jsonrpc\Exceptions\JsonrpcException;
+use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
 
 class JsonrpcResponseBuilder implements JsonrpcResponseBuilderInterface
 {
@@ -10,7 +12,15 @@ class JsonrpcResponseBuilder implements JsonrpcResponseBuilderInterface
 
 	public function buildFromResult($request, $result)
 	{
-		return $this->buildRaw($request, self::SUCCESS_PROPERTY, $result);
+		if ($result instanceof JsonResponse) {
+			$raw_result = json_decode($result->getContent());
+		} else if ($result instanceof Response) {
+			$raw_result = $result->getOriginalContent();
+		} else {
+			$raw_result = $result;
+		}
+
+		return $this->buildRaw($request, self::SUCCESS_PROPERTY, $raw_result);
 	}
 
 	public function buildFromException($request, \Exception $exception)
