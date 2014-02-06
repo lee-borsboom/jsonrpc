@@ -26,8 +26,7 @@ class RequestValidator implements RequestValidatorInterface
 
 	public function hasValidMethodFormat(array $request)
 	{
-		$regex = '/^[A-Z][[:alpha:]]+(\.[[:alpha:]]+)+$/';
-		return isset($request['method']) && \preg_match($regex, $request['method']);
+		return isset($request['method']);
 	}
 
 	public function hasValidParameters(array $request)
