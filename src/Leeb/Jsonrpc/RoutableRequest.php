@@ -21,8 +21,8 @@ class RoutableRequest implements RoutableInterface
 	public function route()
 	{
 		try {
-			$callable = $this->resolver->resolve($this->request->getMethod());
 			\Request::replace($this->request->rawData());
+			$callable = $this->resolver->resolve($this->request->getMethod());
 			$result = $this->executeRequest($callable);
 			$response = $this->response_builder->buildFromResult($this->request, $result);
 			$this->fireBeforeOutputEvent($response, $callable);
