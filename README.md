@@ -21,6 +21,12 @@ Configuration
 
 After publishing the configuration file (see step 3 in the installation process), the JSON-RPC configuration file will be located in &lt;app path&gt;/config/packages/leeb/jsonrpc/config.php
 
+#### Laravel 4 ServiceProvider
+
+And add the following to your app/config/app.php file :
+
+In the Service Providers array : 'Leeb\Jsonrpc\JsonrpcServiceProvider',
+
 #### Routing
 
 By default, this package will only route requests that match http://www.yourhost.com/jsonrpc. This can be configured by setting the **route_prefix** configuration option. Note that to match all routes, set this to null or remove the **route_prefix** configuration setting from the configuration file entirely.
