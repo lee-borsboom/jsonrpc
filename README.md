@@ -55,6 +55,19 @@ Note how the {class} is replaced with the class from the method in the JSON-RPC 
 
 Another, more flexible method of resolution is to provide a **callable** in the **resolver** configurable option. If provided, this should be a **callable** that accepts one parameter (the method string direct from the client request) and return a string representing the class to use in action the request (including the full namespace).
 
+#### Exception handling
+
+By default any exceptions in the controllers should be caught by the JSON-RPC service, which will generate a JSON-RPC internal error. An exception handler can be registered with the JSON-RPC service that can manipulate exceptions into alternative JSON-RPC errors.
+
+The exception handler is added as a closure in the JSON-RPC config, for example:
+
+    return array(
+        'exception_handler' => function ($request, $exception) {
+            Log::error($exception);
+            return new JsonrpcError(-32000, 'Error message', 'additional data');
+        }
+    );
+
 Usage
 -----
 

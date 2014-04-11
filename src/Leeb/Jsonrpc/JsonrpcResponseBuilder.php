@@ -1,6 +1,7 @@
 <?php namespace Leeb\Jsonrpc;
 
 use Leeb\Jsonrpc\Interfaces\JsonrpcResponseBuilderInterface;
+use Leeb\Jsonrpc\Interfaces\JsonrpcConfigurationInterface;
 use Leeb\Jsonrpc\Exceptions\JsonrpcException;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
@@ -9,6 +10,11 @@ class JsonrpcResponseBuilder implements JsonrpcResponseBuilderInterface
 {
 	const SUCCESS_PROPERTY = 'result';
 	const ERROR_PROPERTY = 'error';
+
+	public function __construct(JsonrpcConfigurationInterface $config_service)
+	{
+		$this->config_service = $config_service;
+	}
 
 	public function buildFromResult($request, $result)
 	{
@@ -25,6 +31,12 @@ class JsonrpcResponseBuilder implements JsonrpcResponseBuilderInterface
 
 	public function buildFromException($request, \Exception $exception)
 	{
+		$handler = $this->config_service->getExceptionHandler();
+
+		if ($handler) {
+			return $handler($request, $exception);
+		}
+
 		if ($exception instanceOf JsonrpcException) {
 			return $this->buildFromJsonrpcException($request, $exception);
 		}
@@ -47,7 +59,7 @@ class JsonrpcResponseBuilder implements JsonrpcResponseBuilderInterface
 	private function buildFromJsonrpcException($request, JsonrpcException $exception)
 	{
 		$args = array(
-			$exception->getJsonrpcErrorCode(),
+			$exception->getCode(),
 			$exception->getMessage(),
 			$exception->getData()
 		);

@@ -20,4 +20,9 @@ class JsonrpcConfiguration implements JsonrpcConfigurationInterface
 	{
 		return \Config::get('jsonrpc::resolver');
 	}
+
+	public function getExceptionHandler()
+	{
+		return \Config::get('jsonrpc::exception_handler');
+	}
 }
