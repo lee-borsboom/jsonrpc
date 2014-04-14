@@ -64,7 +64,7 @@ The exception handler is added as a closure in the JSON-RPC config, for example:
     return array(
         'exception_handler' => function ($request, $exception) {
             Log::error($exception);
-            return new JsonrpcError(-32000, 'Error message', 'additional data');
+            return new JsonrpcError($request->getId(), -32000, 'Error message', 'additional data');
         }
     );
 
