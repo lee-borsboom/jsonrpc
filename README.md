@@ -37,12 +37,12 @@ This package expects that requests will be made that have a method property in t
 
 The **resolution_pattern** configuration option defines how the method from the request will be resolved to a concrete class.
 
-The package is configured initially to look for the class _\Class\ClassController_. For example, the package will look for _\Records\RecordsController_ and call the _list_ method, given the following request:
+The package is configured initially to look for the class _\Class\ClassController_. For example, the package will look for _\Records\RecordsController_ and call the _listRecords_ method, given the following request:
 
 	{
 		"id" : 123,
 		"jsonrpc" : "2.0",
-		"method" : "Records.list"
+		"method" : "Records.listRecords"
 	}
 
 The initial configuration setting is:
@@ -93,7 +93,7 @@ The body of the JSON-RPC params structure is accessible using Laravel's _Input::
 	
 	class RecordsController
 	{
-		public function list()
+		public function listRecords()
 		{
 			return \Response::make(array(
 				"artist" => \Input::get('artist'),

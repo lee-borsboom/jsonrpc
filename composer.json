@@ -1,7 +1,7 @@
 {
     "name": "leeb/jsonrpc",
     "description": "JSONRPC 2.0 package for Laravel 4",
-    "version" : "0.0.5-alpha",
+    "version" : "0.0.6-alpha",
     "authors": [
         {
             "name": "Lee Borsboom",
