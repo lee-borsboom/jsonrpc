@@ -38,7 +38,7 @@ class JsonrpcServiceProvider extends ServiceProvider
 		});
 
 		\App::bind('Leeb\Jsonrpc\JsonrpcError', function ($app, $data) {
-			return new \Leeb\Jsonrpc\JsonrpcError($data[0], $data[1], $data[2]);
+			return new \Leeb\Jsonrpc\JsonrpcError($data[0], $data[1], $data[2], $data[3]);
 		});
 
 		\App::bind('Leeb\Jsonrpc\RoutableNotification', function ($app, $data) {

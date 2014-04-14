@@ -2,15 +2,22 @@
 
 class JsonrpcError
 {
+	public $id;
 	public $code;
 	public $message;
-	public $data;
+	public $error;
 
-	public function __construct($code, $message, $data)
+	public function __construct($id, $code, $message, $error)
 	{
+		$this->setId($id);
 		$this->setCode($code);
 		$this->setMessage($message);
-		$this->setData($data);
+		$this->setError($error);
+	}
+
+	public function setId($id)
+	{
+		$this->id = $id;
 	}
 
 	public function setCode($code)
@@ -23,12 +30,12 @@ class JsonrpcError
 		$this->message = $message;
 	}
 
-	public function setData($data)
+	public function setError($error)
 	{
-		if ($data === null) {
-			unset($this->data);
+		if ($error === null) {
+			unset($this->error);
 		} else {
-			$this->data = $data;
+			$this->error = $error;
 		}
 	}
 }
