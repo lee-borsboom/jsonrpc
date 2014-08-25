@@ -6,6 +6,8 @@ JSON-RPC 2.0 package for Laravel 4, including full support for notifications and
 
 Installation
 ------------
+Note that while this package is not stable, you need to ensure that your composer.json file has the minimum-stability flag set to "dev" otherwise installation of this package will fail.
+
 
 ###### Assuming you have Composer installed globally, run the following commands in the root of your Laravel project:
 
