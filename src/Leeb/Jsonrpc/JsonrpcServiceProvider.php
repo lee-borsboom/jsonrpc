@@ -83,7 +83,7 @@ class JsonrpcServiceProvider extends ServiceProvider
 		{
 			\Route::post($route_prefix, function ()
 			{
-				\App::make('Leeb\Jsonrpc\Interfaces\RouterInterface')->route();
+				return \App::make('Leeb\Jsonrpc\Interfaces\RouterInterface')->route();
 			});
 		});
 	}
@@ -94,7 +94,7 @@ class JsonrpcServiceProvider extends ServiceProvider
 		{
 			\Route::post('{all}', function ($path)
 			{
-				\App::make('Leeb\Jsonrpc\Interfaces\RouterInterface')->route();
+				return \App::make('Leeb\Jsonrpc\Interfaces\RouterInterface')->route();
 
 			})->where('all', '.*');
 		});

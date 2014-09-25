@@ -24,7 +24,7 @@ class Router implements RouterInterface
 			$result = $this->response_builder->buildFromException(null, $e);
 		}
 
-		$this->outputResult($result);
+		return $this->outputResult($result);
 	}
 
 	protected function getRawRequest()
@@ -41,9 +41,11 @@ class Router implements RouterInterface
 	protected function outputResult($result)
 	{
 		if (is_array($result) || is_object($result)) {
-			echo json_encode($result);
-		} else {
-			echo $result;
+			$result = json_encode($result);
 		}
+
+		$r = \Response::make($result, 200);
+		$r->header('Content-Type', 'application/json; charset=UTF-8');
+		return $r;
 	}
 }
