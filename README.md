@@ -1,3 +1,7 @@
+*This project has been orphaned. Expect to have to maintain it yourself if you choose to use it. I'll accept pull requests that look reasonable but beyond that no further work will be added to this project.*
+
+
+
 JSON-RPC
 =======
 
