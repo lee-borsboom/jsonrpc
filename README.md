@@ -79,6 +79,10 @@ Usage
 
 After installing and configuring this package you're ready to rock 'n' roll. Simply create a controller (or whatever you'd prefer to call it) with the desired methods.
 
+Are two ways to access the params passed in the request. 
+
+#### If you use keyname params (params sended in an object)
+
 The body of the JSON-RPC params structure is accessible using Laravel's _Input::all()_, _Input::get_ and _Request::input_ methods.
 
 ###### Sample request
@@ -131,6 +135,40 @@ The body of the JSON-RPC params structure is accessible using Laravel's _Input::
 				"Queens of the Stone Age"
 			]
 		}
+	}
+
+#### If you use index params (params sended as indexed array)
+
+The params are accesible in the method closure.
+Note: You have to declare the method's params to access the data as arguments of the method.
+
+###### Sample request
+
+	{
+		"id" : 123,
+		"jsonrpc" : "2.0",
+		"method" : "Test.sayHello",
+		"params" : ["Daniel", 27]
+	}
+
+###### Sample controller
+
+	namespace Test;
+	
+	class TestController
+	{
+		public function sayHello($name, $age)
+		{
+			return 'Hello '.$name.'. You have '.$age.' years old.';
+		}
+	}
+
+###### Sample response
+
+	{
+		"id": 123,
+		"jsonrpc": "2.0",
+		"result": "Hello Daniel. You have 27 years old."
 	}
 
 Events

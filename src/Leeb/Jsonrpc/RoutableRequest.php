@@ -54,13 +54,14 @@ class RoutableRequest implements RoutableInterface
 
 	protected function executeRequest(array $callable)
 	{
-		$this->fireBeforeExecutionEvent($callable);
-		return call_user_func($callable);
+        $params = $this->request->rawData();
+		$this->fireBeforeExecutionEvent($callable, $params);
+		return call_user_func_array($callable, $params);
 	}
 
-	protected function fireBeforeExecutionEvent($callable)
+	protected function fireBeforeExecutionEvent($callable, $params)
 	{
-		\Event::fire('jsonrpc.beforeExecution', array($callable[0], $callable[1]));
+		\Event::fire('jsonrpc.beforeExecution', array($callable[0], $callable[1], $params));
 	}
 
 	protected function fireBeforeOutputEvent($response, $callable)

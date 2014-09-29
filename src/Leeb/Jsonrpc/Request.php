@@ -8,7 +8,7 @@ class Request implements RequestInterface
 	protected $id;
 	protected $version;
 	protected $method;
-	protected $params;
+	protected $params = array();
 
 	public function __construct($request_data)
 	{
