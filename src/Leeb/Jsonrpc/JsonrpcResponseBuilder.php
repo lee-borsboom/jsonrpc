@@ -47,7 +47,7 @@ class JsonrpcResponseBuilder implements JsonrpcResponseBuilderInterface
 	private function buildFromGenericException($request, $exception)
 	{
 		$args = array(
-			$request->getId(),
+			$request ? $request->getId() : null,
 			-32603,
 			'Internal Error',
 			$exception->getMessage()
@@ -60,10 +60,10 @@ class JsonrpcResponseBuilder implements JsonrpcResponseBuilderInterface
 	private function buildFromJsonrpcException($request, JsonrpcException $exception)
 	{
 		$args = array(
-			$request->getId(),
+			$request ? $request->getId() : null,
 			$exception->getCode(),
 			$exception->getMessage(),
-			$exception->getError()
+			method_exists($exception, 'getError') ? $exception->getError() : ''
 		);
 
 		$body = \App::make('Leeb\Jsonrpc\JsonrpcError', $args);
